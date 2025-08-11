@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./972c67f5-43e1-4646-8b8c-245944607596.png" alt="Brasão UFRJ" width="150"/>
+  <img src="https://github.com/Isaquesilvaa/My-desc-/blob/main/ufrj-horizontal-cor-rgb-telas.png" alt="Brasão UFRJ" width="150"/>
 </p>
 
 # Sistema Acadêmico - Projeto MySQL UFRJ Style
