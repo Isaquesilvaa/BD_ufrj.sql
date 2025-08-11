@@ -1,68 +1,67 @@
----
+<p align="center">
+  <img src="./972c67f5-43e1-4646-8b8c-245944607596.png" alt="Brasão UFRJ" width="150"/>
+</p>
 
 # Sistema Acadêmico - Projeto MySQL UFRJ Style
 
-## Descrição
+---
 
-Este projeto consiste em um sistema acadêmico simplificado desenvolvido em MySQL, inspirado na estrutura utilizada por universidades como a UFRJ. O banco de dados modela as principais entidades e relações do ambiente acadêmico, incluindo unidades acadêmicas, cursos, alunos, professores, disciplinas, períodos letivos, ofertas, matrículas e avaliações.
+## Universidade Federal do Rio de Janeiro (UFRJ)  
+**Instituto de Computação** — Banco de Dados e Sistemas de Informação  
 
-Além disso, o projeto inclui mecanismos para backup automático por meio de triggers, procedimentos armazenados para facilitar operações comuns e uma base para relatórios e dashboards.
+---
+
+## Apresentação
+
+Este projeto representa uma implementação acadêmica de um sistema de gestão universitária em MySQL, inspirado nos princípios e na arquitetura adotados pela UFRJ. A modelagem abrange as principais entidades e suas relações no contexto da administração acadêmica, contemplando desde unidades organizacionais até processos fundamentais como matrículas e avaliações.
+
+Com foco em integridade, auditabilidade e facilidade operacional, o sistema utiliza recursos avançados do MySQL, incluindo triggers para backup automático, procedures para automatização de processos e views para consultas otimizadas, conferindo robustez e confiabilidade à gestão dos dados.
 
 ---
 
 ## Estrutura do Banco de Dados
 
-### Tabelas Principais
-
-* **unidades\_academicas:** Unidades organizacionais da universidade (ex: IM, POLI).
-* **cursos:** Cursos oferecidos, vinculados a unidades acadêmicas.
-* **alunos:** Dados pessoais dos alunos, vinculados a cursos.
-* **professores:** Professores vinculados a unidades acadêmicas.
-* **disciplinas:** Disciplinas relacionadas aos cursos.
-* **periodos\_letivos:** Informações sobre períodos acadêmicos (ano, semestre, datas).
-* **ofertas:** Ofertas de disciplinas em determinados períodos, com turma, professor e vagas.
-* **matriculas:** Matrículas dos alunos nas ofertas.
-* **avaliacoes:** Avaliações e notas associadas às matrículas.
-
-### Banco de Backup
-
-* **backup\_ufrj:** Banco separado para armazenar históricos de alterações e exclusões através de triggers, garantindo integridade e auditabilidade.
+- **unidades_academicas:** Representa os órgãos acadêmicos da UFRJ, como o Instituto de Matemática (IM), Poli, entre outros.
+- **cursos:** Catalogação dos cursos oferecidos, vinculados às unidades acadêmicas.
+- **alunos:** Cadastro detalhado dos estudantes.
+- **professores:** Corpo docente associado às unidades.
+- **disciplinas:** Disciplinas curriculares estruturadas por curso.
+- **periodos_letivos:** Definição dos ciclos acadêmicos (anos, semestres).
+- **ofertas:** Disponibilização das disciplinas em períodos específicos, turmas, professores e vagas.
+- **matriculas:** Registro das inscrições dos alunos nas ofertas.
+- **avaliacoes:** Armazenamento das avaliações e notas vinculadas às matrículas.
 
 ---
 
-## Funcionalidades Implementadas
+## Banco de Backup
 
-* **Triggers:** Para backup automático em operações de INSERT, UPDATE e DELETE nas tabelas críticas.
-* **Procedures:** Automatização de processos como matrícula de alunos com verificação de vagas.
-* **Functions:** Cálculos específicos, como média das notas dos alunos.
-* **Views:** Visões pré-definidas para facilitar consultas comuns.
-* **Eventos:** Agendamento de tarefas automáticas, como controle de matrículas.
+Para garantir a segurança e histórico dos dados, foi criado um banco de backup (`backup_ufrj`), que armazena logs de alterações via triggers, permitindo auditoria e recuperação de informações.
 
 ---
 
-## Como Usar
+## Funcionalidades Desenvolvidas
 
-1. **Criar banco principal e tabelas:**
-   Execute os scripts SQL para criar todas as tabelas na ordem correta, garantindo as relações de chave estrangeira.
-
-2. **Popular dados iniciais:**
-   Utilize os scripts de inserção fornecidos para popular unidades, cursos, alunos, professores, disciplinas, períodos, ofertas, matrículas e avaliações.
-
-3. **Criar banco de backup e tabelas de histórico:**
-   Execute o script para criar o banco `backup_ufrj` e suas tabelas de backup.
-
-4. **Criar triggers:**
-   No banco principal, crie as triggers que inserem automaticamente dados no banco de backup ao ocorrerem alterações.
-
-5. **Executar procedimentos armazenados e funções:**
-   Utilize procedures para matrículas e outras operações, e funções para cálculos.
-
-6. **Consultar e criar relatórios:**
-   Utilize as views para facilitar consultas ou conecte ferramentas externas (Power BI, Tableau, etc.) para dashboards.
+- **Triggers** para captura automática de operações de inserção, atualização e exclusão, alimentando o banco de backup.
+- **Procedures** para processos complexos, como verificação de vagas antes da matrícula.
+- **Functions** para cálculos acadêmicos, como médias ponderadas.
+- **Views** para facilitar consultas frequentes, reduzindo complexidade.
+- **Eventos** programados para automação de tarefas periódicas.
 
 ---
 
-## Exemplo de Consulta
+## Utilização
+
+1. Criação dos bancos e tabelas na ordem correta para manter as relações.
+2. Inserção dos dados iniciais (unidades, cursos, alunos, etc.).
+3. Configuração do banco `backup_ufrj` com as tabelas de histórico.
+4. Implementação das triggers para backup automático.
+5. Execução das procedures e funções para operações cotidianas.
+6. Utilização de views para consultas e extração de relatórios.
+7. Integração com ferramentas externas (Power BI, Tableau) para dashboards e análises.
+
+---
+
+## Exemplo de Consulta Acadêmica
 
 ```sql
 SELECT a.nome AS aluno, c.nome AS curso, d.nome AS disciplina, av.nota
@@ -72,29 +71,3 @@ JOIN ofertas o ON m.id_oferta = o.id_oferta
 JOIN disciplinas d ON o.id_disciplina = d.id_disciplina
 JOIN avaliacoes av ON m.id_matricula = av.id_matricula
 WHERE a.id_aluno = 1;
-```
-
----
-
-## Tecnologias Utilizadas
-
-* MySQL 8.0+
-* SQL procedural (Triggers, Procedures, Functions)
-* Ferramentas externas sugeridas para análise e visualização (Power BI, Tableau, etc.)
-
----
-
-## Próximos Passos
-
-* Implementar controle de acesso com usuários e permissões específicas.
-* Desenvolver interface web para interação com o banco.
-* Expandir o histórico com logs detalhados de usuários.
-* Automatizar relatórios periódicos via eventos agendados.
-
----
-
-## Autor
-
-Isaque Silva de Jesus
-
-
